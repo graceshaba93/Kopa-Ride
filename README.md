@@ -1,10 +1,10 @@
-# CorperRide
+#CorperRide
 
 Batch-based interstate trip booking for NYSC corps members. Corpers search trips by route and batch and book a seat. Operators create trips, see passenger lists and demand per route per batch, and chat with the admin. The admin watches every bus on a fleet map and chats with operators.
 
 Built with the Python standard library only, so there is nothing to install.
 
-## Run it (needs Python 3.9+)
+##Run it (needs Python 3.9+)
 
 ```
 python3 seed.py     # creates the database with SYNTHETIC demo data (run it again after updating the code: the schema changed)
