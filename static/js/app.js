@@ -22,12 +22,13 @@ function toast(msg, isErr) {
 async function api(method, path, body) {
   const res = await fetch(path, {
     method, headers: { "Content-Type": "application/json", ...(state.token ? { Authorization: "Bearer " + state.token } : {}) },
-    body: body ? JSON.stringify(body) : undefined });
+    body: body ? JSON.stringify(body) : undefined
+  });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || "Request failed");
   return data;
 }
-const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const opts = (arr, any) => (any ? `<option value="">${any}</option>` : "") + arr.map(x => `<option>${esc(x)}</option>`).join("");
 
 // ---------- auth ----------
@@ -47,8 +48,10 @@ $("a-role").onchange = showAuth;
 $("a-go").onclick = async () => {
   try {
     const body = { email: $("a-email").value, password: $("a-pass").value };
-    if (state.mode === "signup") Object.assign(body, { name: $("a-name").value, role: $("a-role").value,
-      batch: $("a-batch").value, operator_code: $("a-code").value, admin_code: $("a-code").value });
+    if (state.mode === "signup") Object.assign(body, {
+      name: $("a-name").value, role: $("a-role").value,
+      batch: $("a-batch").value, operator_code: $("a-code").value, admin_code: $("a-code").value
+    });
     const data = await api("POST", state.mode === "signup" ? "/api/signup" : "/api/login", body);
     state.token = data.token; state.user = data.user; localStorage.setItem("token", data.token);
     enterApp();
@@ -63,7 +66,7 @@ function enterApp() {
   $("who").textContent = state.user.name + " · " + (state.user.batch || role);
   const tabs = role === "admin" ? [["fleet", "Fleet map"], ["chat", "Messages"]]
     : role === "operator" ? [["ops", "Operator dashboard"], ["chat", "Messages"]]
-    : [["find", "Find a trip"], ["mine", "My bookings"]];
+      : [["find", "Find a trip"], ["mine", "My bookings"]];
   $("tabs").innerHTML = tabs.map(([k, l]) => `<button data-t="${k}">${l}</button>`).join("");
   $("tabs").querySelectorAll("button").forEach(b => b.onclick = () => showTab(b.dataset.t));
   stopBadge(); if (role !== "corper") startBadge();   // unread-message count on the Messages tab
@@ -91,8 +94,10 @@ function tripCard(t) {
     </div></div>`;
 }
 async function searchTrips() {
-  const q = new URLSearchParams({ origin: $("f-origin").value, destination: $("f-dest").value,
-    batch: $("f-batch").value, date: $("f-date").value });
+  const q = new URLSearchParams({
+    origin: $("f-origin").value, destination: $("f-dest").value,
+    batch: $("f-batch").value, date: $("f-date").value
+  });
   const { trips } = await api("GET", "/api/trips?" + q);
   $("f-results").innerHTML = trips.length ? trips.map(tripCard).join("") : `<div class="empty">No trips match. Try fewer filters.</div>`;
   $("f-results").querySelectorAll("[data-book]").forEach(b => b.onclick = async () => {
@@ -109,7 +114,7 @@ async function loadMine() {
       <div class="meta">${esc(b.depart_date)} at ${esc(b.depart_time)} · ${esc(b.batch)} · ${esc(b.operator_name)} · ${b.seats} seat(s)</div>
     </div><div style="text-align:right"><div class="price">${naira(b.price * b.seats)}</div>
       ${b.status === "confirmed" ? `<span class="tag">Confirmed · pay at boarding</span><div style="margin-top:6px"><button data-track="${b.trip_id}">Track trip</button> <button class="danger" data-cancel="${b.id}">Cancel</button></div>`
-        : `<span class="tag out">Cancelled</span>`}
+      : `<span class="tag out">Cancelled</span>`}
     </div></div>`).join("") : `<div class="empty">No bookings yet.</div>`;
   wireTrack($("m-results"));
   $("m-results").querySelectorAll("[data-cancel]").forEach(b => b.onclick = async () => {
@@ -142,8 +147,10 @@ async function loadOps() {
 }
 $("o-go").onclick = async () => {
   try {
-    await api("POST", "/api/operator/trips", { origin: $("o-origin").value, destination: $("o-dest").value, batch: $("o-batch").value,
-      depart_date: $("o-date").value, depart_time: $("o-time").value, seats_total: $("o-seats").value, price: $("o-price").value });
+    await api("POST", "/api/operator/trips", {
+      origin: $("o-origin").value, destination: $("o-dest").value, batch: $("o-batch").value,
+      depart_date: $("o-date").value, depart_time: $("o-time").value, seats_total: $("o-seats").value, price: $("o-price").value
+    });
     toast("Trip added."); loadOps();
   } catch (e) { toast(e.message, true); }
 };
