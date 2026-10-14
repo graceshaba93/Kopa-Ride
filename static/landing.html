@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CorperRide: interstate trips, batch by batch</title>
+<meta name="description" content="Book interstate seats organised by NYSC batch.">
+<link rel="stylesheet" href="/css/landing.css">
+</head>
+<body>
+
+<!--
+  LANDING PAGE: this file and css/landing.css are the frontend person's to redesign freely.
+  The only rule: the "Get started" and "Log in" buttons must link to /app (that is the booking app).
+  Everything below is placeholder copy and layout. Replace the text, images and colours.
+  Colours, fonts and spacing live as variables at the top of css/landing.css.
+-->
+
+<!-- Top bar -->
+<header class="top">
+  <a class="logo" href="/">CorperRide</a>
+  <nav>
+    <a href="#how">How it works</a>
+    <a href="#operators">For operators</a>
+    <a class="btn ghost" href="/app">Log in</a>
+    <a class="btn" href="/app">Get started</a>
+  </nav>
+</header>
+
+<!-- Hero: the one-sentence promise. TODO: add a hero image or illustration -->
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">For NYSC corps members</p>
+    <h1>Travel between states with your batch.</h1>
+    <p class="lead">Find an interstate trip for your batch, book a seat, and follow your bus on the way.</p>
+    <div class="cta">
+      <a class="btn big" href="/app">Find a trip</a>
+      <a class="btn big ghost" href="#how">See how it works</a>
+    </div>
+    <!-- TODO: replace with a screenshot of the app (take one from /app) -->
+    <div class="placeholder-shot">App screenshot goes here</div>
+  </div>
+</section>
+
+<!-- How it works: three steps -->
+<section id="how" class="section">
+  <div class="wrap">
+    <h2>How it works</h2>
+    <div class="steps">
+      <article class="step">
+        <span class="num">1</span>
+        <h3>Pick your batch and route</h3>
+        <p>Choose where you are going and which batch you are in.</p>
+      </article>
+      <article class="step">
+        <span class="num">2</span>
+        <h3>Book a seat</h3>
+        <p>See the price and the seats left, then reserve yours. Pay at boarding.</p>
+      </article>
+      <article class="step">
+        <span class="num">3</span>
+        <h3>Follow your trip</h3>
+        <p>Watch progress, speed and arrival time on a live-style tracking screen.</p>
+        <!-- Honest label: tracking is a simulation in the demo version. Keep this note until real GPS exists. -->
+        <p class="note">Tracking is simulated in this demo.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- For operators -->
+<section id="operators" class="section alt">
+  <div class="wrap two-col">
+    <div>
+      <h2>For transport operators</h2>
+      <p>Create trips, see who has booked, and see how many people want each route in each batch, so you know how many buses to send.</p>
+      <a class="btn" href="/app">Create an operator account</a>
+    </div>
+    <!-- TODO: replace with a screenshot of the operator dashboard -->
+    <div class="placeholder-shot">Operator dashboard screenshot</div>
+  </div>
+</section>
+
+<!-- Final call to action -->
+<section class="section center">
+  <div class="wrap">
+    <h2>Ready for your next trip?</h2>
+    <a class="btn big" href="/app">Get started</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>CorperRide: a student project. Trips, prices and tracking in this demo are sample data.</span>
+  </div>
+</footer>
+
+</body>
+</html>

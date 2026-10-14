@@ -1,0 +1,5 @@
+corpride.db
+corpride.db-wal
+corpride.db-shm
+__pycache__/
+*.pyc

@@ -1,0 +1,81 @@
+/* App styles: the corper and operator screens. The landing page has its own file: landing.css */
+  :root { --green:#0b6b3a; --green-d:#08502b; --ink:#1b1f1d; --mute:#5d6762; --line:#dfe5e1; --bg:#f5f7f6; --warn:#b3261e; }
+  * { box-sizing: border-box; }
+  body { margin:0; font:15px/1.45 system-ui, sans-serif; color:var(--ink); background:var(--bg); }
+  header { background:var(--green); color:#fff; padding:12px 16px; display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  header h1 { font-size:18px; margin:0; flex:1; }
+  header button { background:transparent; color:#fff; border:1px solid #ffffff88; }
+  main { max-width:900px; margin:0 auto; padding:16px; }
+  nav { display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; }
+  nav button { background:#fff; color:var(--ink); border:1px solid var(--line); }
+  nav button.on { background:var(--green); color:#fff; border-color:var(--green); }
+  button { font:inherit; padding:8px 14px; border-radius:6px; border:0; background:var(--green); color:#fff; cursor:pointer; }
+  button:hover { background:var(--green-d); }
+  button:disabled { background:#aab5af; cursor:not-allowed; }
+  button.ghost { background:#fff; color:var(--ink); border:1px solid var(--line); }
+  button.danger { background:#fff; color:var(--warn); border:1px solid var(--warn); }
+  input, select { font:inherit; padding:8px; border:1px solid var(--line); border-radius:6px; background:#fff; width:100%; }
+  label { display:block; font-size:13px; color:var(--mute); margin-bottom:4px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:10px; padding:14px; margin-bottom:10px; }
+  .row { display:flex; gap:10px; flex-wrap:wrap; align-items:flex-end; }
+  .row > div { flex:1 1 150px; }
+  .trip { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; align-items:center; }
+  .route { font-weight:600; font-size:16px; }
+  .meta { color:var(--mute); font-size:13px; }
+  .price { font-weight:600; }
+  .tag { display:inline-block; font-size:12px; padding:2px 8px; border-radius:99px; background:#e6f2ea; color:var(--green-d); }
+  .tag.low { background:#fff1d6; color:#8a5a00; }
+  .tag.out { background:#fde7e5; color:var(--warn); }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th, td { text-align:left; padding:8px; border-bottom:1px solid var(--line); }
+  th { color:var(--mute); font-weight:600; font-size:12px; text-transform:uppercase; }
+  .bar { height:8px; background:#e6ebe8; border-radius:4px; overflow:hidden; min-width:80px; }
+  .bar > i { display:block; height:100%; background:var(--green); }
+  #toast { position:fixed; left:50%; bottom:20px; transform:translateX(-50%); background:#1b1f1d; color:#fff; padding:10px 16px; border-radius:8px; display:none; max-width:90vw; }
+  #toast.err { background:var(--warn); }
+  .hide { display:none !important; }
+  h2 { margin:0 0 10px; font-size:17px; }
+  .empty { color:var(--mute); text-align:center; padding:24px; }
+  /* tracking screen */
+  .modal { position:fixed; inset:0; background:#0007; overflow:auto; padding:16px; z-index:10; }
+  .modal-box { max-width:720px; margin:0 auto; background:#fff; border-radius:12px; padding:14px; }
+  .sim-badge { display:inline-block; background:#fff1d6; color:#8a5a00; font-size:12px; font-weight:600; padding:3px 10px; border-radius:99px; margin-bottom:8px; }
+  #tk-map { width:100%; height:auto; background:#eaf2ed; border-radius:10px; display:block; }
+  .sd { fill:#b7c4bc; } .rb { fill:none; stroke:#9fb3a7; stroke-width:3; stroke-dasharray:6 6; }
+  .rd { fill:none; stroke:var(--green); stroke-width:4; stroke-linecap:round; }
+  .pin.o { fill:#fff; stroke:var(--green); stroke-width:3; } .pin.d { fill:var(--green); stroke:#fff; stroke-width:3; }
+  .lbl { font-size:13px; font-weight:600; fill:var(--ink); }
+  .ring { fill:var(--green); } .busdot { fill:#fff; stroke:var(--green); stroke-width:2; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:8px; margin:10px 0; }
+  .stat { background:var(--bg); border-radius:8px; padding:8px; } .stat b { display:block; font-size:17px; } .stat span { font-size:12px; color:var(--mute); }
+  .steps { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:10px; }
+  .step { font-size:13px; padding:4px 10px; border-radius:99px; background:var(--bg); color:var(--mute); }
+  .step.done { background:#e6f2ea; color:var(--green-d); } .step.cur { background:var(--green); color:#fff; }
+
+/* admin fleet map */
+.fleet-grid { display:grid; grid-template-columns:1.5fr 1fr; gap:12px; margin-top:12px; }
+#fl-map { width:100%; height:auto; background:#eaf2ed; border-radius:10px; display:block; }
+#fl-list { max-height:480px; overflow:auto; }
+.bus { background:#fff; border:1px solid var(--line); border-radius:8px; padding:8px 10px; margin-bottom:6px; cursor:pointer; }
+.bus.sel { border-color:var(--green); box-shadow:0 0 0 2px #0b6b3a33; }
+.bus .bt { display:flex; justify-content:space-between; gap:8px; font-weight:600; font-size:14px; }
+.bus .sub { color:var(--mute); font-size:12px; }
+.fb { cursor:pointer; }
+.ph-enroute { fill:var(--green); } .ph-boarding { fill:#d99a00; } .ph-arrived { fill:#8a948f; }
+.fb circle { stroke:#fff; stroke-width:2; }
+.rt { fill:none; stroke:#9fb3a7; stroke-width:1.5; opacity:.55; } .rt.sel { stroke:var(--green); stroke-width:3; opacity:1; }
+.detail-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:8px; margin:8px 0; }
+
+/* chat */
+.chat-grid { display:grid; grid-template-columns:240px 1fr; gap:12px; }
+.chat-grid.single { grid-template-columns:1fr; }
+.thread { padding:8px; border-radius:8px; cursor:pointer; border:1px solid transparent; }
+.thread:hover { background:var(--bg); } .thread.sel { background:#e6f2ea; border-color:var(--green); }
+.thread b { display:block; font-size:14px; }
+.thread span { color:var(--mute); font-size:12px; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.badge { background:var(--warn); color:#fff; border-radius:99px; font-size:11px; padding:1px 7px; margin-left:6px; }
+.msgs { height:340px; overflow:auto; display:flex; flex-direction:column; gap:6px; margin-top:8px; padding:6px; background:var(--bg); border-radius:8px; }
+.msg { max-width:80%; padding:7px 10px; border-radius:10px; background:#fff; border:1px solid var(--line); font-size:14px; white-space:pre-wrap; overflow-wrap:anywhere; }
+.msg.me { align-self:flex-end; background:#e6f2ea; border-color:#cfe5d6; }
+.msg small { display:block; color:var(--mute); font-size:11px; margin-top:2px; }
+@media (max-width: 760px) { .fleet-grid, .chat-grid { grid-template-columns:1fr; } }

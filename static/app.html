@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CorperRide</title>
+<link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<header>
+  <h1><a href="/" style="color:inherit;text-decoration:none">CorperRide</a> <span style="font-weight:400;font-size:13px;opacity:.85">interstate trips, batch by batch</span></h1>
+  <span id="who"></span>
+  <button id="logout" class="hide">Log out</button>
+</header>
+<main>
+  <!-- Auth -->
+  <section id="auth" class="card hide">
+    <h2 id="auth-title">Log in</h2>
+    <div class="row">
+      <div class="signup-only hide"><label>Full name</label><input id="a-name"></div>
+      <div><label>Email</label><input id="a-email" type="email"></div>
+      <div><label>Password</label><input id="a-pass" type="password"></div>
+    </div>
+    <div class="row signup-only hide" style="margin-top:10px">
+      <div><label>I am a</label>
+        <select id="a-role"><option value="corper">Corps member</option><option value="operator">Transport operator</option><option value="admin">Administrator</option></select></div>
+      <div id="a-batch-wrap"><label>My batch</label><select id="a-batch"></select></div>
+      <div id="a-code-wrap" class="hide"><label>Access code</label><input id="a-code"></div>
+    </div>
+    <div style="margin-top:12px; display:flex; gap:8px; align-items:center; flex-wrap:wrap">
+      <button id="a-go">Log in</button>
+      <button id="a-switch" class="ghost">Create an account</button>
+      <span class="meta">Demo: demo@example.com or ops@example.com, password demo1234</span>
+    </div>
+  </section>
+
+  <!-- App -->
+  <section id="app" class="hide">
+    <nav id="tabs"></nav>
+
+    <div id="tab-find">
+      <div class="card">
+        <div class="row">
+          <div><label>From</label><select id="f-origin"></select></div>
+          <div><label>To</label><select id="f-dest"></select></div>
+          <div><label>Batch</label><select id="f-batch"></select></div>
+          <div><label>Date</label><input id="f-date" type="date"></div>
+          <div style="flex:0 0 auto"><button id="f-go">Search</button></div>
+        </div>
+      </div>
+      <div id="f-results"></div>
+    </div>
+
+    <div id="tab-mine" class="hide"><div id="m-results"></div></div>
+
+    <div id="tab-ops" class="hide">
+      <div class="card">
+        <h2>Create a trip</h2>
+        <div class="row">
+          <div><label>From</label><select id="o-origin"></select></div>
+          <div><label>To</label><select id="o-dest"></select></div>
+          <div><label>Batch</label><select id="o-batch"></select></div>
+        </div>
+        <div class="row" style="margin-top:10px">
+          <div><label>Date</label><input id="o-date" type="date"></div>
+          <div><label>Time</label><input id="o-time" type="time" value="06:00"></div>
+          <div><label>Seats</label><input id="o-seats" type="number" min="1" max="70" value="30"></div>
+          <div><label>Price (₦)</label><input id="o-price" type="number" min="0" step="500" value="20000"></div>
+          <div style="flex:0 0 auto"><button id="o-go">Add trip</button></div>
+        </div>
+      </div>
+      <h2>Demand by route and batch</h2>
+      <div id="o-demand" class="card"></div>
+      <h2>My trips</h2>
+      <div id="o-trips"></div>
+    </div>
+
+    <!-- Admin: every bus on one map -->
+    <div id="tab-fleet" class="hide">
+      <div class="card">
+        <div class="row">
+          <div><label>Operator</label><select id="fl-op"></select></div>
+          <div><label>Mode</label><select id="fl-mode"><option value="demo">Live demo (sped up)</option><option value="schedule">Follow the real schedule</option></select></div>
+          <div><label>Demo speed</label><select id="fl-rate"><option value="5">Slow</option><option value="10" selected>Normal</option><option value="30">Fast</option></select></div>
+          <div style="flex:0 0 auto"><button class="ghost" id="fl-restart">Restart</button></div>
+        </div>
+        <div class="meta" style="margin-top:8px"><span class="sim-badge">SIMULATED DEMO · bus positions are not real GPS</span> <span id="fl-summary"></span></div>
+      </div>
+      <div class="fleet-grid">
+        <svg id="fl-map" viewBox="0 0 600 480" role="img" aria-label="Map of all buses"></svg>
+        <div id="fl-list"></div>
+      </div>
+      <div id="fl-detail" class="card hide"></div>
+    </div>
+
+    <!-- Admin and operators: chat. The admin sees a list of operators; an operator sees one thread with the admin. -->
+    <div id="tab-chat" class="hide">
+      <div class="chat-grid">
+        <div id="ch-threads" class="card hide"></div>
+        <div class="card">
+          <div class="route" id="ch-title">Messages</div>
+          <div id="ch-msgs" class="msgs"></div>
+          <div class="row" style="margin-top:8px; flex-wrap:nowrap">
+            <div style="flex:1"><input id="ch-input" maxlength="1000" placeholder="Type a message"></div>
+            <div style="flex:0 0 auto"><button id="ch-send">Send</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="track" class="modal hide">
+  <div class="modal-box">
+    <div class="trip" style="margin-bottom:8px">
+      <div><div class="route" id="tk-route"></div><div class="meta" id="tk-meta"></div></div>
+      <button class="ghost" id="tk-close">Close</button>
+    </div>
+    <span class="sim-badge">SIMULATED DEMO · bus positions are not real GPS</span>
+    <svg id="tk-map" viewBox="0 0 600 480" role="img" aria-label="Trip route map"></svg>
+    <div class="stats">
+      <div class="stat"><span>Status</span><b id="tk-status"></b></div>
+      <div class="stat"><span>Progress</span><b id="tk-pct"></b></div>
+      <div class="stat"><span>Distance</span><b id="tk-km"></b></div>
+      <div class="stat"><span>Speed</span><b id="tk-speed-now"></b></div>
+      <div class="stat"><span>Arrives about</span><b id="tk-eta"></b></div>
+      <div class="stat"><span>GPS ping</span><b id="tk-ping"></b></div>
+    </div>
+    <div class="steps" id="tk-steps"></div>
+    <div class="row">
+      <div><label>Mode</label><select id="tk-mode"><option value="demo">Live demo (sped up)</option><option value="schedule">Follow the real schedule</option></select></div>
+      <div><label>Demo speed</label><select id="tk-rate"><option value="5">Slow (5 min per second)</option><option value="10" selected>Normal (10 min per second)</option><option value="30">Fast (30 min per second)</option></select></div>
+      <div style="flex:0 0 auto"><button class="ghost" id="tk-restart">Restart</button></div>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
